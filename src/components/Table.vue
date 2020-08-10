@@ -89,28 +89,29 @@
                             if(found !== -1){
                                 if (parseFloat(i[1]) === 0) {
                                     oldArray.splice(found,1)
-
                                 } else {
                                     Vue.set(oldArray, found, i)
                                 }
                             } else {
+                                if(parseFloat(i[1]) !== 0) {
 
                                     const length = oldArray.length
                                     Vue.set(oldArray, length, i)
-                                    function compareInc(a, b) {
-                                        if (Number(a[0]) > Number(b[0])) return 1 ;
-                                        if (Number(a[0]) === Number(b[0])) return 0;
-                                        if (Number(a[0])  < Number(b[0])) return -1;
-                                        /*return (a[0]-b[0])*/
-                                    }
-                                    function compareDec(a, b) {
-                                        if (Number(a[0]) > Number(b[0])) return -1 ;
-                                        if (Number(a[0]) === Number(b[0])) return 0;
-                                        if (Number(a[0])  < Number(b[0])) return 1;
-                                        /*return (b[0]-a[0])*/
-                                    }
-                                    (newArray === asks) ? oldArray.sort(compareInc) : oldArray.sort(compareDec)
 
+                                    function compareInc(a, b) {
+                                        if (Number(a[0]) > Number(b[0])) return 1;
+                                        if (Number(a[0]) === Number(b[0])) return 0;
+                                        if (Number(a[0]) < Number(b[0])) return -1;
+                                    }
+
+                                    function compareDec(a, b) {
+                                        if (Number(a[0]) > Number(b[0])) return -1;
+                                        if (Number(a[0]) === Number(b[0])) return 0;
+                                        if (Number(a[0]) < Number(b[0])) return 1;
+                                    }
+
+                                    (newArray === asks) ? oldArray.sort(compareInc) : oldArray.sort(compareDec)
+                                }
                             }
 
                             oldArray = oldArray.filter(i => parseFloat(i[1]) !== 0)
@@ -122,6 +123,12 @@
                 if (bids) {
                     updateData(bids, self.data.bids)
                 }
+
+                if(asks){
+                    self.$store.setStateArray('a', asks)
+                    self.$store.setStateArray('b', bids)
+                }
+
             }
         },
         destroyed() {
@@ -140,7 +147,7 @@
         height: 100%;
         margin-right: 15px;
         position: relative;
-
+        width: 450px;
     }
 
     .table-header {
@@ -148,7 +155,7 @@
         justify-content: space-between;
         position: fixed;
         z-index: 10;
-
+        width: 450px;
     }
     .bid .table-header {
         background-color: #c17878;
@@ -159,29 +166,119 @@
 
     .table-header_item {
         display: flex;
-        padding: .5rem 1rem;
-        width: auto;
+        /*padding: .5rem 1rem;*/
+        padding: 10px 20px;
     }
-/*    .item1 {
-        width: 90px;
+    .item1 {
+        width: 100px;
     }
     .item2 {
-        width: 110px;
+        width: 150px;
     }
     .item3 {
-        width: 60px;
-    }*/
+        width: 200px;
+    }
     .table-content {
         height: 100%;
         flex-direction: column;
         position: relative;
-        top: 34px;
+        top: 38px;
         z-index: 0;
         overflow-y: hidden;
-        width: calc(100% - 15px);
+        /*width: calc(100% - 15px);*/
+        width: 435px;
     }
     .table-content:hover {
         overflow-y: auto;
-        width: 100%;
+        /*width: 100%;*/
+        width: 450px;
+    }
+
+    @media (max-width: 900px) {
+        .bid, .ask{
+            width: 370px;
+        }
+
+        .table-header {
+            width: 370px;
+        }
+
+        .table-content {
+            width: 355px;
+            top: 28px;
+        }
+        .table-content:hover {
+            width: 370px;
+        }
+
+        .table-header_item {
+            padding: 5px 10px;
+        }
+
+        .item1 {
+            width: 70px;
+        }
+        .item2 {
+            width: 100px;
+        }
+        .item3 {
+            width: 150px;
+        }
+    }
+
+    @media (max-width: 771px) {
+        .bid, .ask{
+            width: 220px;
+        }
+
+        .table-header {
+            width: 220px;
+        }
+
+        .table-content {
+            width: 205px;
+        }
+        .table-content:hover {
+            width: 220px;
+        }
+        .item1 {
+            width: 105px;
+        }
+        .item2 {
+            width: 100px;
+        }
+        .item3 {
+            display: none;
+        }
+    }
+
+    @media (max-width: 490px) {
+        .container {
+            font-size: 12px;
+        }
+        .bid, .ask{
+            width: 150px;
+        }
+
+        .table-header {
+            width: 150px;
+        }
+
+        .table-content {
+            width: 150px;
+        }
+        .table-content:hover {
+            width: 165px;
+        }
+
+        .item1 {
+            width: 80px;
+        }
+        .item2 {
+            width: 70px;
+        }
+        .item3 {
+            display: none;
+        }
     }
 </style>

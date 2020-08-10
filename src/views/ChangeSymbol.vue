@@ -11,21 +11,25 @@
         <option value="ETCUSDT">ETCUSDT</option>
       </select>
     </div>
+    <List :a="a" :b="b"/>
   </div>
 </template>
 
 <script>
   import NavTab from '@/components/NavTab'
+  import List from '@/components/List'
   import {bus} from '../main'
 
   export default {
     name: 'ChangeSymbol',
     components: {
-      NavTab
+      NavTab, List
     },
     data(){
       return {
-        symbol: this.$store.getState('symbol')
+        symbol: this.$store.getState('symbol'),
+        a: this.$store.getState('a'),
+        b: this.$store.getState('b'),
       }
     },
     methods: {

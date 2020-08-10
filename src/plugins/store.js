@@ -10,6 +10,12 @@ export default {
             setState(name, value) {
                 this.state[name] = value;
             },
+            setStateArray(arrayName, value) {
+                if(!this.state[arrayName]){
+                    this.state[arrayName]=[]
+                }
+                this.state[arrayName].push(value);
+            },
             clearState(name) {
                 this.state[name] = "";
             }
